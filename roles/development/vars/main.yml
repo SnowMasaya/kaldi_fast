@@ -1,0 +1,4 @@
+---
+venv_home: "{{ home }}/venv"
+ipython_notebook_profile: nbserver
+ipython_notebook_port: 8888

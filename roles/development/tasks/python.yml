@@ -1,0 +1,32 @@
+---
+- name: yum install basic pkg
+  yum: pkg={{ item }} state=installed
+  sudo: yes
+  when: ansible_os_family == 'RedHat'
+  with_items:
+  - libssl-dev
+  - libbz2-dev
+  - libreadline-dev
+  - libsqlite3-dev
+  tags: install_pyenv
+
+- name: git clone pyenv
+  git: repo=https://github.com/yyuu/pyenv.git dest={{ home }}/.pyenv
+  sudo: no
+  tags: install_pyenv
+
+- name: set .bash_profile config by copying from file
+  template: src=bash_profile.j2 dest={{ home }}/.bash_profile
+  sudo: no
+  tags: install_pyenv
+
+- name: install pyenv's python and rehash
+  shell: . {{ home }}/.bash_profile && pyenv install -s {{ python_version }} && pyenv rehash && pyenv global {{ python_version }}
+  tags: install_pyenv
+
+- name: pip install global python pkgs
+  pip: name={{ item }} state=latest executable={{ home }}/.pyenv/shims/pip
+  with_items:
+  - pip
+  - virtualenv
+  tags: global_python_libraries

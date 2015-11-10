@@ -1,0 +1,53 @@
+---
+- name: yum install matplotlib dependency pkg
+  yum: name={{ item }} state=installed
+  sudo: yes
+  with_items:
+  - libfreetype6-dev
+  - libxft-dev
+  tags: install_matplotlib
+
+- name: pip install util libraries in 'venv'
+  pip: name={{ item }} state=latest virtualenv={{ venv_home }} virtualenv_command={{ home }}/.pyenv/shims/virtualenv virtualenv_site_packages=no
+  sudo: no
+  with_items:
+  - matplotlib
+  tags: install_matplotlib
+
+- name: pip install util libraries in 'venv'
+  pip: name={{ item }} state=latest virtualenv={{ venv_home }} virtualenv_command={{ home }}/.pyenv/shims/virtualenv virtualenv_site_packages=no
+  sudo: no
+  with_items:
+  - ipython
+  - ipython[notebook]
+  tags: install_ipython
+
+- name: checking notebooks port
+  wait_for: host={{ inventory_hostname }} port={{ ipython_notebook_port }} state=stopped timeout=1
+  tags: configure_ipython
+
+- name: check ipython_profile is exist
+  stat: path={{ home }}/.ipython/profile_{{ ipython_notebook_profile }}
+  register: ipython_profile_existence
+  tags: configure_ipython
+
+- name: creating ipython profile
+  shell: . {{ home }}/.bash_profile && . {{ venv_home }}/bin/activate && ipython profile create {{ ipython_notebook_profile }}
+  when: ipython_profile_existence.stat.md5 is not defined
+  tags: configure_ipython
+
+- name: updating ipython configuration
+  lineinfile: >
+    dest="{{ home }}/.ipython/profile_{{ ipython_notebook_profile }}/ipython_config.py"
+    state=present
+    backrefs=yes
+    regexp="{{ item.regexp }}"
+    line="{{ item.line }}"
+  with_items:
+  - regexp: '^#?\s*c\.NotebookApp\.ip\s*=.*$'
+    line: c.NotebookApp.ip = '*'
+  - regexp: '^#?\s*c\.NotebookApp\.open_browser\s*=.*$'
+    line: c.NotebookApp.open_browser = False
+  - regexp: '^#?\s*c\.NotebookApp\.port\s*=.*$'
+    line: c.NotebookApp.port = {{ ipython_notebook_port }}
+  tags: configure_ipython

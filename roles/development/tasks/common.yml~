@@ -1,0 +1,17 @@
+---
+- name: Upgrate Package
+  yum: name=* state=latest
+  sudo: yes
+  tags: update
+
+- name: yum install basic pkg
+  yum: name={{ item }} state=installed
+  sudo: yes
+  when: ansible_os_family == 'RedHat'
+  with_items:
+  - git
+  - gcc
+  - build-essential
+  - gfortran
+  - python-dev 
+  tags: initial_setup

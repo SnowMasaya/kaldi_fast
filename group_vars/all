@@ -1,0 +1,4 @@
+---
+python_version: 3.4.3
+user: ubuntu
+home: /home/{{ user }}
