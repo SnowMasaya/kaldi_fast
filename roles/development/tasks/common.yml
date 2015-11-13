@@ -9,9 +9,21 @@
   sudo: yes
   when: ansible_os_family == 'RedHat'
   with_items:
+#  - atlas-sse3-devel
+  - atlas-devel
+#  - nkf
   - git
-  - gcc
-  - build-essential
-  - gfortran
-  - python-dev 
+  - gcc-c++
+  - zlib-devel
+  - automake
+  - libtool
+  - autoconf
+  - patch
+  - subversion
+  - lynx
+  - graphviz
+  - bc
+  - vim
+  - bzip2 
+  - wget
   tags: initial_setup

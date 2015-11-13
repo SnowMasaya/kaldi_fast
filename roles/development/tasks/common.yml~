@@ -1,17 +1,29 @@
 ---
-- name: Upgrate Package
-  yum: name=* state=latest
-  sudo: yes
-  tags: update
+#- name: Upgrate Package
+#  yum: name=* state=latest
+#  sudo: yes
+#  tags: update
 
 - name: yum install basic pkg
   yum: name={{ item }} state=installed
   sudo: yes
   when: ansible_os_family == 'RedHat'
   with_items:
+#  - atlas-sse3-devel
+  - atlas-devel
+#  - nkf
   - git
-  - gcc
-  - build-essential
-  - gfortran
-  - python-dev 
+  - gcc-c++
+  - zlib-devel
+  - automake
+  - libtool
+  - autoconf
+  - patch
+  - subversion
+  - lynx
+  - graphviz
+  - bc
+  - vim
+  - bzip2 
+  - wget
   tags: initial_setup

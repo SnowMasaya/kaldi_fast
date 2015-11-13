@@ -1,7 +1,0 @@
-[defaults]
-host_key_checking = False
-hostfile = ./hosts
-executable = /bin/bash -l
-
-[ssh_connection]
-ssh_args = -o UserKnownHostsFile=/dev/null
