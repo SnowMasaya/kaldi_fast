@@ -51,6 +51,8 @@ coverage.xml
 # Django stuff:
 *.log
 *.bk
+*.swp
+*~
 
 # arff:
 *.arff

@@ -1,5 +1,0 @@
----
-#- include: common.yml
-- include: kaldi.yml
-- include: GPU.yml
-- include: gridEngine.yml
