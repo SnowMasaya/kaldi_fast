@@ -1,8 +1,7 @@
 ---
-- name: yum install basic pkg
-  yum: name={{ item }} state=installed
+- name: apt-get install basic pkg
+  apt: pkg={{ item }} state=installed
   sudo: yes
-  when: ansible_os_family == 'RedHat'
   with_items:
   - gridengine-master 
   - gridengine-client 

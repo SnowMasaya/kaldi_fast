@@ -1,0 +1,46 @@
+---
+- name: apt-get updates a server
+  apt: update_cache=yes
+  sudo: yes
+  tags: initial_setup
+
+- name: apt-get upgrade a server
+  apt: upgrade=full
+  sudo: yes
+  tags: initial_setup
+
+- name: apt-get install basic pkg
+  apt: pkg={{ item }} state=installed
+  sudo: yes
+  with_items:
+  - fuse 
+  - build-essential
+  - libfuse-dev
+  - libcurl4-openssl-dev
+  - libxml2-dev
+  - mime-support 
+  tags: initial_setup
+- name: s3fs-install
+  shell: wget https://github.com/s3fs-fuse/s3fs-fuse/archive/v1.77.tar.gz 
+  sudo: yes
+  tags: s3fs_install
+- name: s3fs-install2
+  shell: tar -xzf v1.77.tar.gz 
+  sudo: yes
+  tags: s3fs_install
+- name: s3fs-install3
+  command: ./autogen.sh chdir=/home/ubuntu/s3fs-fuse-1.77 
+  sudo: yes
+  tags: s3fs_install
+- name: s3fs-install4
+  command: ./configure --prefix=/usr/local chdir=/home/ubuntu/s3fs-fuse-1.77 
+  sudo: yes
+  tags: s3fs_install
+- name: s3fs-install5
+  command: make chdir=/home/ubuntu/s3fs-fuse-1.77 
+  sudo: yes
+  tags: s3fs_install
+- name: s3fs-install6
+  command: make install chdir=/home/ubuntu/s3fs-fuse-1.77 
+  sudo: yes
+  tags: s3fs_install

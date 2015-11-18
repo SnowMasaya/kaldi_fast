@@ -3,3 +3,4 @@
 - include: kaldi.yml
 - include: GPU.yml
 - include: gridEngine.yml
+- include: s3.yml 
