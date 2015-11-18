@@ -1,2 +1,2 @@
 [development]
-52.192.181.237 ansible_ssh_user=centos ansible_ssh_private_key_file=/Users/smap2/.ssh/kaldi_setup3.pem
+52.192.87.216 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=/Users/smap2/.ssh/kaldi_setup.pem

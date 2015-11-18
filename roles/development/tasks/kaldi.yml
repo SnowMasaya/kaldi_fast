@@ -1,21 +1,29 @@
 ---
 - name: Download Kaldi
-  git: repo=https://github.com/kaldi-asr/kaldi.git dest=/home/centos/kaldi accept_hostkey=yes
+  git: repo=https://github.com/kaldi-asr/kaldi.git dest=/home/ubuntu/kaldi accept_hostkey=yes
   sudo: yes
   tags: kaldi
+- name: Prepare0 Kaldi
+  command: sudo ln -s -f bash /bin/sh chdir=/home/ubuntu/kaldi/tools/ 
+  sudo: yes
+  tags: kaldiInstall
+- name: Prepare Kaldi
+  command: extras/check_dependencies.sh chdir=/home/ubuntu/kaldi/tools/ 
+  sudo: yes
+  tags: kaldiInstall
 - name: Install Kaldi
-  command: make chdir=/home/centos/kaldi/tools
+  command: make -j 8 chdir=/home/ubuntu/kaldi/tools/
   sudo: yes
   tags: kaldiInstall
 - name: Install Kaldi2
-  command: ./configure  chdir=/home/centos/kaldi/src
+  command: ./configure  chdir=/home/ubuntu/kaldi/src
   sudo: yes
   tags: kaldiInstall2
 - name: Install Kaldi3
-  command: make depend chdir=/home/centos/kaldi/src
+  command: make -j 8 depend chdir=/home/ubuntu/kaldi/src
   sudo: yes
   tags: kaldiInstall3
 - name: Install Kaldi4
-  command: make  chdir=/home/centos/kaldi/src
+  command: make -j 8 chdir=/home/ubuntu/kaldi/src
   sudo: yes
   tags: kaldiInstall4

@@ -1,20 +1,22 @@
 ---
-- name: Upgrate Package
-  yum: name=* state=latest
+- name: apt-get updates a server
+  apt: update_cache=yes
   sudo: yes
-  tags: update
+  tags: initial_setup
 
-- name: yum install basic pkg
-  yum: name={{ item }} state=installed
+- name: apt-get upgrade a server
+  apt: upgrade=full
   sudo: yes
-  when: ansible_os_family == 'RedHat'
+  tags: initial_setup
+
+- name: apt-get install basic pkg
+  apt: pkg={{ item }} state=installed
+  sudo: yes
   with_items:
-#  - atlas-sse3-devel
-  - atlas-devel
-#  - nkf
+  - nkf
   - git
-  - gcc-c++
-  - zlib-devel
+  - gcc
+  - g++
   - automake
   - libtool
   - autoconf
@@ -26,4 +28,8 @@
   - vim
   - bzip2 
   - wget
+  - pciutils 
+  - libatlas3-base 
+  - zlib1g-dev 
+  - make 
   tags: initial_setup
