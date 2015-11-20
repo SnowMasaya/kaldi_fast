@@ -1,0 +1,7 @@
+- name: apt-get install basic pkg
+  apt: pkg={{ item }} state=installed
+  sudo: yes
+  with_items:
+  - linux-image-extra-virtual
+  tags: initial_setup
+

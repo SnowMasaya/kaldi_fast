@@ -32,4 +32,8 @@
   - libatlas3-base 
   - zlib1g-dev 
   - make 
+  - zip 
+  - p7zip-full 
+  - unzip 
+  - python-pip 
   tags: initial_setup

@@ -39,12 +39,12 @@
   ignore_errors: true
   tags: reboot
 
-- name: wait for SSH port down
-  local_action: wait_for host={{ inventory_hostname }} port=22 state=stopped
-  tags: reboot
+#- name: wait for SSH port down
+#  local_action: wait_for host={{ inventory_hostname }} port=22 state=stopped
+#  tags: reboot
 
 - name: wait for SSH port up
-  local_action: wait_for host={{ inventory_hostname }} port=22 state=started delay=10 timeout=500
+  local_action: wait_for host={{ inventory_hostname }} port=22 state=started delay=10 timeout=300
   tags: reboot
 
 - name: update blacklist-nouveau.conf 

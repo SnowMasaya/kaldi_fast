@@ -1,0 +1,12 @@
+- name: apt-get install linux 
+  apt: pkg={{ item }} state=installed
+  sudo: yes
+  with_items:
+  - linux-source 
+  - linux-headers-3.13.0-37-generic 
+  tags: install_linux
+
+- name: nvidia-install
+  shell: /home/ubuntu/nvidia_installers/NVIDIA-Linux-x86_64-340.29.run --no-questions -a -s 
+  sudo: yes
+  tags: nvidia 

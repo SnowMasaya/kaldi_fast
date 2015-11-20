@@ -1,12 +1,31 @@
-- name: apt-get install linux 
-  apt: pkg={{ item }} state=installed
-  sudo: yes
+---
+- name: update blacklist-nouveau.conf 
+  lineinfile: >
+    dest="/etc/modprobe.d/blacklist-nouveau.conf"
+    create=yes
+    line="{{ item.line }}"
   with_items:
-  - linux-source 
-  - linux-headers-3.13.0-37-generic 
-  tags: install_linux
-
-- name: nvidia-install
-  shell: /home/ubuntu/nvidia_installers/NVIDIA-Linux-x86_64-340.29.run --no-questions -a -s 
+  - line: blacklist nouveau 
+  - line: blacklist lbm-nouveau 
+  - line: options nouveau modeset=0 
+  - line: alias nouveau off 
+  - line: alias lbm-nouveau off 
   sudo: yes
-  tags: nvidia 
+  tags: configure nouveau 
+
+- name: remake nouveau 
+  shell: echo options nouveau modeset=0 | sudo tee -a /etc/modprobe.d/nouveau-kms.conf 
+  sudo: yes
+  tags: configure nouveau 
+
+- name: update 
+  shell: update-initramfs -u 
+  sudo: yes
+  tags: update 
+
+- name: reboot!
+  command: shutdown -r now
+  sudo: yes
+  ignore_errors: true
+  tags: reboot
+

@@ -18,6 +18,7 @@
   - libfuse-dev
   - libcurl4-openssl-dev
   - libxml2-dev
+  - python-pip
   - mime-support 
   tags: initial_setup
 - name: s3fs-install
@@ -44,3 +45,7 @@
   command: make install chdir=/home/ubuntu/s3fs-fuse-1.77 
   sudo: yes
   tags: s3fs_install
+- name: awscil-pip-install
+  command: pip install awscli 
+  sudo: yes
+  tags: awscli
